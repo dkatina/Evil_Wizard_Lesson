@@ -25,6 +25,26 @@ class Mage(Character):
     def __init__(self, name):
         super().__init__(name, health=100, attack_power=35)
 
+class Rogue(Character):
+    def __init__(self, name):
+        super().__init__(name, health=110, attack_power=30)
+
+    def special_ability(self, opponent):
+        print('\n Select Special Ability')
+        print('1. Gathering Shadows')
+        print('2. Siphoning Strikes')
+
+        action = input("Choos an Ability: ")
+        if action == '1':
+            self.attack_power += 20
+            print(f"Shadows gather around {self.name} raising their damage to {self.attack_power}")
+        elif action == '2':
+            opponent.health -= self.attack_power
+            self.health += self.attack_power // 2
+            if self.health > self.max_health: #Checking if I healed for more than max health
+                self.health = self.max_health #if so bringing it down to max_health
+            print(f'{self.name} strikes the Wizard with vampiric daggers, siphoning the Wizards health, healing to {self.health}.')
+
 # EvilWizard class (inherits from Character)
 class EvilWizard(Character):
     def __init__(self, name):
@@ -39,12 +59,14 @@ class EvilWizard(Character):
 # Create Paladin class 
 
 
+`
 def create_character():
     print("Choose your character class:")
     print("1. Warrior")
     print("2. Mage")
     print("3. Archer") 
     print("4. Paladin")  
+    print("5. Rogue")
 
     class_choice = input("Enter the number of your class choice: ")
     name = input("Enter your character's name: ")
@@ -57,6 +79,8 @@ def create_character():
         pass  # Implement Archer class
     elif class_choice == '4':
         pass  # Implement Paladin class
+    elif class_choice == '5':
+        return Rogue(name)
     else:
         print("Invalid choice. Defaulting to Warrior.")
         return Warrior(name)
@@ -74,7 +98,7 @@ def battle(player, wizard):
         if choice == '1':
             player.attack(wizard)
         elif choice == '2':
-            pass  # Implement special abilities
+            player.special_ability(wizard) # Implement special abilities
         elif choice == '3':
             pass  # Implement heal method
         elif choice == '4':
