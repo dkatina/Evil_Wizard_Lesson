@@ -59,7 +59,8 @@ class EvilWizard(Character):
 # Create Paladin class 
 
 
-`
+
+
 def create_character():
     print("Choose your character class:")
     print("1. Warrior")
